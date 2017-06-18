@@ -115,7 +115,7 @@ const labels = words.map((word, i) => ({
 console.log({labels})
 
 regl.frame(() => {
-  regl.clear({ color: [0, 0, 1, 1], depth: true })
+  regl.clear({ color: [0, 0, 0, 1], depth: true })
   camera(() => {
     draw(labels)
   })
