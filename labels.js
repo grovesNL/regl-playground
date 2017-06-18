@@ -57,7 +57,7 @@ const { canvas, tilePositions } =
 document.body.append(canvas)
 
 const texture = regl.texture({
-  flipY: true,
+  flipY: false,
   data: canvas,
 })
 
@@ -72,7 +72,7 @@ const vert = `
     vec3 model = position;
     gl_Position = projection * view * vec4((position + translate), 1);
 
-    vUv = uv;
+    vUv = vec2(uv.x, 1.0 - uv.y);
   }
 `
 
@@ -93,7 +93,7 @@ console.log({plane})
 const draw = regl({
   attributes: {
     position: plane.positions,
-    uv: () => plane.uvs,
+    uv: plane.uvs,
   },
   elements: plane.cells,
   uniforms: {
@@ -115,7 +115,7 @@ const labels = words.map((word, i) => ({
 console.log({labels})
 
 regl.frame(() => {
-  regl.clear({ color: [0, 0, 0, 1], depth: true })
+  regl.clear({ color: [0, 0, 1, 1], depth: true })
   camera(() => {
     draw(labels)
   })
